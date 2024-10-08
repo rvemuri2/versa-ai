@@ -17,11 +17,11 @@ export default function Home() {
           <div className="text-center">
             <SignInModal />
             <h1 className="text-white text-7xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
-              AI Content Generator
+              Versa AI Content Generator
             </h1>
             <p className="text-white mb-5">
-              Generate AI content for your blog, website, or social media with a
-              single click and more
+              Generate content for your blog, website, or social media with a
+              single click and more using Versa AI!
             </p>
             <Link href="/dashboard">
               <Button variant="outline">Get started</Button>
