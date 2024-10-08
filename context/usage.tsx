@@ -34,10 +34,7 @@ export const UsageProvider = ({
   }, [email]);
 
   useEffect(() => {
-    if (
-      !subscribed &&
-      count > Number(process.env.NEXT_PUBLIC_FREE_TIER_USAGE)
-    ) {
+    if (!subscribed && count > 100) {
       setOpenModal(true);
     } else {
       setOpenModal(false);

@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-// import Usage from "@/components/nav/usage";
+import Usage from "@/components/nav/usage";
 import SignUpModal from "@/components/modal/sign-up-modal";
 
 export default function SideNav() {
@@ -62,7 +62,7 @@ export default function SideNav() {
       </ul>
 
       <div className="pb-20 mt-auto">
-        {/* <Usage /> */}
+        <Usage />
         <SignUpModal />
       </div>
     </div>
