@@ -69,7 +69,7 @@ export default function PlanCard({
         <ul className="m-5">
           <li>✨ {name == "Free" ? "Limited" : "Unlimited"} word generation</li>
           <li>🧠 Advanced AI features</li>
-          <li>⚡ Faster processing times</li>
+          <li>⚡ Faster Processing Times</li>
           <li>🛠️ {name == "Free" ? "" : "Priority"} customer support</li>
         </ul>
       </div>
