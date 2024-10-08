@@ -62,8 +62,7 @@ export default function Home() {
 
       <footer className="py-4 text-center border-t-2">
         <p className="text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} AI Content Generator. All rights
-          reserved.
+          &copy; {new Date().getFullYear()} Rohit Vemuri. All rights reserved.
         </p>
       </footer>
     </>
