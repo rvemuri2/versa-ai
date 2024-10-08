@@ -1,4 +1,3 @@
-/* eslint-disable */
 "use client";
 import React from "react";
 import Link from "next/link";
@@ -10,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { runAi } from "@/actions/ai";
 import "@toast-ui/editor/dist/toastui-editor.css";
-
 import { Editor } from "@toast-ui/react-editor";
 import toast from "react-hot-toast";
 import { saveQuery } from "@/actions/ai";
@@ -18,15 +16,16 @@ import { useUser } from "@clerk/nextjs";
 import { Template } from "@/utils/types";
 import { useUsage } from "@/context/usage";
 
-// Correct typing for the "params" prop
 export default function Page({ params }: { params: { slug: string } }) {
   const [query, setQuery] = React.useState("");
   const [content, setContent] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+
   const editorRef = React.useRef<any>(null);
 
-  const { fetchUsage } = useUsage();
+  const { fetchUsage, subscribed, count } = useUsage();
   const { user } = useUser();
+
   const email = user?.primaryEmailAddress?.emailAddress || "";
 
   React.useEffect(() => {
@@ -41,13 +40,15 @@ export default function Page({ params }: { params: { slug: string } }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const data = await runAi(t.aiPrompt + query);
       setContent(data);
+
       await saveQuery(t, email, query, data);
       fetchUsage();
-    } catch (e) {
-      setContent("Error Occurred, try again");
+    } catch (err) {
+      setContent("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -59,20 +60,21 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     try {
       await navigator.clipboard.writeText(c);
-      toast.success("Content copied to clipboard");
-    } catch (e) {
-      toast.error("Error occured, try again");
+      toast.success("Content copied to clipboard.");
+    } catch (err) {
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   return (
     <div>
-      <div className="flex justify-between mx-5">
+      <div className="flex justify-between mx-5 my-3">
         <Link href="/dashboard">
           <Button>
             <ArrowLeft /> <span className="ml-2">Back</span>
           </Button>
         </Link>
+
         <Button onClick={handleCopy}>
           <Copy /> <span className="ml-2">Copy</span>
         </Button>
@@ -87,43 +89,54 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           <form className="mt-6" onSubmit={handleSubmit}>
             {t.form.map((item) => (
-              <div className="my-2 flex flex-col gap-2 mb-7" key={item.name}>
+              <div className="my-2 flex flex-col gap-2 mb-7">
                 <label className="font-bold pb-5">{item.label}</label>
+
                 {item.field === "input" ? (
                   <Input
                     name={item.name}
-                    required={item.required}
                     onChange={(e) => setQuery(e.target.value)}
+                    required={item.required}
                   />
                 ) : (
                   <Textarea
                     name={item.name}
-                    required={item.required}
                     onChange={(e) => setQuery(e.target.value)}
+                    required={item.required}
                   />
                 )}
               </div>
             ))}
-            <Button type="submit" className="w-full py-6" disabled={loading}>
-              {loading ? (
-                <Loader2Icon className="animate-spin mr-2" />
-              ) : (
-                "Generate Content"
-              )}
+
+            <Button
+              type="submit"
+              className="w-full py-6"
+              disabled={
+                loading ||
+                (!subscribed &&
+                  count >= Number(process.env.NEXT_PUBLIC_FREE_TIER_USAGE))
+              }
+            >
+              {loading && <Loader2Icon className="animate-spin mr-2" />}
+              {subscribed ||
+              count < Number(process.env.NEXT_PUBLIC_FREE_TIER_USAGE)
+                ? "Generate content"
+                : "Subscribe to generate content"}
             </Button>
           </form>
         </div>
+
         <div className="col-span-2">
           <Editor
             ref={editorRef}
-            initialValue="Generated content will appear here"
+            initialValue="Generated content will appear here."
             previewStyle="vertical"
             height="600px"
             initialEditType="wysiwyg"
             useCommandShortcut={true}
-            onChange={() =>
-              setContent(editorRef.current.getInstance().getMarkdown())
-            }
+            // onChange={() =>
+            //   setContent(editorRef.current.getInstance().getMarkdown())
+            // }
           />
         </div>
       </div>

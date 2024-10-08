@@ -22,10 +22,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Toaster } from "react-hot-toast";
+import { useUsage } from "@/context/usage";
 
 export default function TopNav() {
   const { isSignedIn, user } = useUser();
   const { setTheme } = useTheme();
+  const { subscribed } = useUsage();
 
   return (
     <nav className="flex flex-col">
@@ -34,7 +36,9 @@ export default function TopNav() {
         <Link href="/">
           <Image src={logo} alt="Logo" />
         </Link>
-        <Link href="/membership">🔥 Join Free or $0.99/month</Link>
+        {!subscribed && (
+          <Link href="/membership">🔥 Join Free or $0.99/month</Link>
+        )}
         <div className="flex items-center">
           {isSignedIn && (
             <Link
