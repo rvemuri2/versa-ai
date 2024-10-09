@@ -39,7 +39,7 @@ export default function TopNav() {
         {!subscribed && (
           <Link href="/membership">🔥 Join Free or $0.99/month</Link>
         )}
-        <Link href="/gen-ai">Versa AI</Link>
+        <Link href="/gen-ai">Try Custom Prompt in Versa AI Here</Link>
         <div className="flex items-center">
           {isSignedIn && (
             <Link
