@@ -57,7 +57,7 @@ export async function createCheckoutSession(): Promise<CheckoutSessionResponse> 
   }
 }
 
-export async function checkUserSusbcription() {
+export async function checkUserSubscription() {
   const user = await currentUser();
   const customerEmail = user?.emailAddresses[0]?.emailAddress;
 

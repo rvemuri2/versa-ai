@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { usageCount } from "@/actions/ai";
-import { checkUserSusbcription } from "@/actions/stripe";
+import { checkUserSubscription } from "@/actions/stripe";
 import { useUser } from "@clerk/nextjs";
 
 interface UsageContextType {
@@ -50,7 +50,7 @@ export const UsageProvider = ({
   };
 
   const fetchSubscription = async () => {
-    const response = await checkUserSusbcription();
+    const response = await checkUserSubscription();
     setSubscribed(response?.ok || false);
   };
 
