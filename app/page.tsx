@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <div
         className="relative bg-cover bg-center"
-        style={{ backgroundImage: 'url("/background.png")', height: "50vh" }}
+        style={{ backgroundImage: 'url("/ai.png")', height: "50vh" }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#010818] z-0"></div>
 
