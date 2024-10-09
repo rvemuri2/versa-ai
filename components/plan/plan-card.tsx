@@ -8,6 +8,7 @@ import { SignInButton, useUser } from "@clerk/nextjs";
 import { createCheckoutSession } from "@/actions/stripe";
 import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
+import { fetchSubscription } from "@/actions/stripe";
 
 export default function PlanCard({
   name,
@@ -40,6 +41,7 @@ export default function PlanCard({
 
         if (url) {
           window.location.href = url;
+          fetchSubscription();
         }
       } catch (err: any) {
         toast.error("An unexpected error occurred. Please try again later.");
