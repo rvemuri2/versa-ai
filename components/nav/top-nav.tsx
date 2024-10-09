@@ -42,10 +42,7 @@ export default function TopNav() {
         <Link href="/gen-ai">Try Custom Prompt in Versa AI Here</Link>
         <div className="flex items-center">
           {isSignedIn && (
-            <Link
-              href="/dashboard"
-              className="mr-2"
-            >{`${user.fullName}'s Dashboard`}</Link>
+            <Link href="/dashboard" className="mr-2">{`Your Dashboard`}</Link>
           )}
           <SignedOut>
             <SignInButton />
